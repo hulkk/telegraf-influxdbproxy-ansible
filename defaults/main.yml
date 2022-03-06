@@ -1,11 +1,11 @@
 ---
 
-ruuviproxy_telegraf_interval: "20s"
-ruuviproxy_telegraf_round_interval: true
-ruuviproxy_telegraf_metric_batch_size: 1000
-ruuviproxy_telegraf_metric_buffer_limit: 10000
-ruuviproxy_telegraf_collection_jitter: "0s"
-ruuviproxy_telegraf_flush_interval: "10s"
-ruuviproxy_telegraf_flush_jitter: "0s"
-ruuviproxy_telegraf_log_timezone: "Europe/Helsinki"
-ruuviproxy_telegraf_influxdb_listener: ":8186"
+influxdbproxy_telegraf_interval: "20s"
+influxdbproxy_telegraf_round_interval: true
+influxdbproxy_telegraf_metric_batch_size: 1000
+influxdbproxy_telegraf_metric_buffer_limit: 10000
+influxdbproxy_telegraf_collection_jitter: "0s"
+influxdbproxy_telegraf_flush_interval: "10s"
+influxdbproxy_telegraf_flush_jitter: "0s"
+influxdbproxy_telegraf_log_timezone: "Europe/Helsinki"
+influxdbproxy_telegraf_influxdb_listener: ":8186"

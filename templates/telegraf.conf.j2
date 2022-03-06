@@ -2,34 +2,34 @@
 # Configuration for telegraf agent
 [agent]
   ## Default data collection interval for all inputs
-  interval = "{{ ruuviproxy_telegraf_interval }}"
+  interval = "{{ influxdbproxy_telegraf_interval }}"
   ## Rounds collection interval to 'interval'
   ## ie, if interval="10s" then always collect on :00, :10, :20, etc.
-  round_interval = {{ ruuviproxy_telegraf_round_interval | lower }}
+  round_interval = {{ influxdbproxy_telegraf_round_interval | lower }}
 
   ## Telegraf will send metrics to outputs in batches of at most
   ## metric_batch_size metrics.
   ## This controls the size of writes that Telegraf sends to output plugins.
-  metric_batch_size = {{ ruuviproxy_telegraf_metric_batch_size }}
+  metric_batch_size = {{ influxdbproxy_telegraf_metric_batch_size }}
 
   ## Maximum number of unwritten metrics per output.  Increasing this value
   ## allows for longer periods of output downtime without dropping metrics at the
   ## cost of higher maximum memory usage.
-  metric_buffer_limit = {{ ruuviproxy_telegraf_metric_buffer_limit }}
+  metric_buffer_limit = {{ influxdbproxy_telegraf_metric_buffer_limit }}
 
   ## Collection jitter is used to jitter the collection by a random amount.
   ## Each plugin will sleep for a random time within jitter before collecting.
   ## This can be used to avoid many plugins querying things like sysfs at the
   ## same time, which can have a measurable effect on the system.
-  collection_jitter = "{{ ruuviproxy_telegraf_collection_jitter }}"
+  collection_jitter = "{{ influxdbproxy_telegraf_collection_jitter }}"
 
   ## Default flushing interval for all outputs. Maximum flush_interval will be
   ## flush_interval + flush_jitter
-  flush_interval = "{{ ruuviproxy_telegraf_flush_interval }}"
+  flush_interval = "{{ influxdbproxy_telegraf_flush_interval }}"
   ## Jitter the flush interval by a random amount. This is primarily to avoid
   ## large write spikes for users running a large number of telegraf instances.
   ## ie, a jitter of 5s and interval 10s means flushes will happen every 10-15s
-  flush_jitter = "{{ ruuviproxy_telegraf_flush_jitter }}"
+  flush_jitter = "{{ influxdbproxy_telegraf_flush_jitter }}"
 
   ## By default or when set to "0s", precision will be set to the same
   ## timestamp order as the collection interval, with the maximum being 1s.
@@ -69,7 +69,7 @@
 
   ## Pick a timezone to use when logging or type 'local' for local time.
   ## Example: America/Chicago
-  log_with_timezone = "{{ ruuviproxy_telegraf_log_timezone }}"
+  log_with_timezone = "{{ influxdbproxy_telegraf_log_timezone }}"
 
   ## Override default hostname, if empty use os.Hostname()
   hostname = ""
@@ -78,7 +78,7 @@
 
 [[inputs.influxdb_listener]]
   ## Address and port to host HTTP listener on
-  service_address = "{{ ruuviproxy_telegraf_influxdb_listener }}"
+  service_address = "{{ influxdbproxy_telegraf_influxdb_listener }}"
 
   ## maximum duration before timing out read of the request
   read_timeout = "10s"
@@ -124,16 +124,16 @@
   ## Multiple URLs can be specified for a single cluster, only ONE of the
   ## urls will be written to each interval.
   ##   ex: urls = ["https://us-west-2-1.aws.cloud2.influxdata.com"]
-  urls = ["{{ telegraf_output_influxdbv2.url }}"]
+  urls = ["{{ influxdbproxy_telegraf_output_influxdbv2.url }}"]
 
   ## Token for authentication.
-  token = "{{ telegraf_output_influxdbv2.token }}"
+  token = "{{ influxdbproxy_telegraf_output_influxdbv2.token }}"
 
   ## Organization is the name of the organization you wish to write to; must exist.
-  organization = "{{ telegraf_output_influxdbv2.organization }}"
+  organization = "{{ influxdbproxy_telegraf_output_influxdbv2.organization }}"
 
   ## Destination bucket to write into.
-  bucket = "{{ telegraf_output_influxdbv2.bucket }}"
+  bucket = "{{ influxdbproxy_telegraf_output_influxdbv2.bucket }}"
 
   ## The value of this tag will be used to determine the bucket.  If this
   ## tag is not set the 'bucket' option is used as the default.
