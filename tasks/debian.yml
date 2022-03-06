@@ -1,0 +1,39 @@
+---
+
+- name: add influxdata repository
+  copy:
+    src: influxdb.list
+    dest: /etc/apt/sources.list.d/influxdb.list
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: add influxdata repository signature key
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: install telegraf
+  apt:
+    name: telegraf
+    update_cache: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: configure telegraf
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart telegraf
+
+- name: flush handlers
+  meta: flush_handlers
+
+- name: start telegraf
+  service:
+    name: telegraf
+    enabled: yes
+    state: started
+

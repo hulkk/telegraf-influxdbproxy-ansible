@@ -1,0 +1,10 @@
+---
+
+- name: include telegraf tasks for debian
+  include_tasks: debian.yml
+  args:
+    apply:
+      become: yes
+  when:
+    - ansible_distribution == 'Debian'
+
