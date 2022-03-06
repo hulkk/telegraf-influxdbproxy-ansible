@@ -3,7 +3,7 @@
 - name: assert that mandatory variables are defined
   assert:
     that:
-      - telegraf_output_influxdbv2 is defined
+      - influxdbproxy_telegraf_output_influxdbv2 is defined
     fail_msg: 'mandatory variable(s) not defined'
 
 - name: include telegraf tasks for debian
