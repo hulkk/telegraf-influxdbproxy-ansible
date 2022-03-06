@@ -1,34 +1,34 @@
 # Configuration for telegraf agent
 [agent]
   ## Default data collection interval for all inputs
-  interval = "20s"
+  interval = "{{ ruuviproxy_telegraf_interval }}"
   ## Rounds collection interval to 'interval'
   ## ie, if interval="10s" then always collect on :00, :10, :20, etc.
-  round_interval = true
+  round_interval = {{ ruuviproxy_telegraf_round_interval | lower }}
 
   ## Telegraf will send metrics to outputs in batches of at most
   ## metric_batch_size metrics.
   ## This controls the size of writes that Telegraf sends to output plugins.
-  metric_batch_size = 1000
+  metric_batch_size = {{ ruuviproxy_telegraf_metric_batch_size }}
 
   ## Maximum number of unwritten metrics per output.  Increasing this value
   ## allows for longer periods of output downtime without dropping metrics at the
   ## cost of higher maximum memory usage.
-  metric_buffer_limit = 10000
+  metric_buffer_limit = {{ ruuviproxy_telegraf_metric_buffer_limit }}
 
   ## Collection jitter is used to jitter the collection by a random amount.
   ## Each plugin will sleep for a random time within jitter before collecting.
   ## This can be used to avoid many plugins querying things like sysfs at the
   ## same time, which can have a measurable effect on the system.
-  collection_jitter = "0s"
+  collection_jitter = "{{ ruuviproxy_telegraf_collection_jitter }}"
 
   ## Default flushing interval for all outputs. Maximum flush_interval will be
   ## flush_interval + flush_jitter
-  flush_interval = "10s"
+  flush_interval = "{{ ruuviproxy_telegraf_flush_interval }}"
   ## Jitter the flush interval by a random amount. This is primarily to avoid
   ## large write spikes for users running a large number of telegraf instances.
   ## ie, a jitter of 5s and interval 10s means flushes will happen every 10-15s
-  flush_jitter = "0s"
+  flush_jitter = "{{ ruuviproxy_telegraf_flush_jitter }}"
 
   ## By default or when set to "0s", precision will be set to the same
   ## timestamp order as the collection interval, with the maximum being 1s.
@@ -47,16 +47,16 @@
   ## Log target controls the destination for logs and can be one of "file",
   ## "stderr" or, on Windows, "eventlog".  When set to "file", the output file
   ## is determined by the "logfile" setting.
-  # logtarget = "file"
+  logtarget = "file"
 
   ## Name of the file to be logged to when using the "file" logtarget.  If set to
   ## the empty string then logs are written to stderr.
-  # logfile = ""
+  logfile = "/var/log/telegraf/telegraf.log"
 
   ## The logfile will be rotated after the time interval specified.  When set
   ## to 0 no time based rotation is performed.  Logs are rotated only when
   ## written to, if there is no log activity rotation may be delayed.
-  # logfile_rotation_interval = "0d"
+  logfile_rotation_interval = "1d"
 
   ## The logfile will be rotated when it becomes larger than the specified
   ## size.  When set to 0 no size based rotation is performed.
@@ -64,11 +64,11 @@
 
   ## Maximum number of rotated archives to keep, any older logs are deleted.
   ## If set to -1, no archives are removed.
-  # logfile_rotation_max_archives = 5
+  logfile_rotation_max_archives = 14
 
   ## Pick a timezone to use when logging or type 'local' for local time.
   ## Example: America/Chicago
-  # log_with_timezone = ""
+  log_with_timezone = "{{ ruuviproxy_telegraf_log_timezone }}"
 
   ## Override default hostname, if empty use os.Hostname()
   hostname = ""
@@ -77,8 +77,7 @@
 
 [[inputs.influxdb_listener]]
   ## Address and port to host HTTP listener on
-  service_address = ":8186"
-  # name_override = "ruuvi_measurements_test"
+  service_address = "{{ ruuviproxy_telegraf_influxdb_listener }}"
 
   ## maximum duration before timing out read of the request
   read_timeout = "10s"
@@ -124,16 +123,16 @@
   ## Multiple URLs can be specified for a single cluster, only ONE of the
   ## urls will be written to each interval.
   ##   ex: urls = ["https://us-west-2-1.aws.cloud2.influxdata.com"]
-  urls = ["{{ telegraf_output_influxdbv2_url }}"]
+  urls = ["{{ telegraf_output_influxdbv2.url }}"]
 
   ## Token for authentication.
-  token = "{{ telegraf_output_influxdbv2_token }}"
+  token = "{{ telegraf_output_influxdbv2.token }}"
 
   ## Organization is the name of the organization you wish to write to; must exist.
-  organization = "{{ telegraf_output_influxdbv2_organization }}"
+  organization = "{{ telegraf_output_influxdbv2.organization }}"
 
   ## Destination bucket to write into.
-  bucket = "{{ telegraf_output_influxdbv2_bucket }}"
+  bucket = "{{ telegraf_output_influxdbv2.bucket }}"
 
   ## The value of this tag will be used to determine the bucket.  If this
   ## tag is not set the 'bucket' option is used as the default.
