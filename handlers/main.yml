@@ -4,6 +4,5 @@
   systemd:
     name: telegraf
     state: restarted
-  become: yes
+  become: true
   ignore_errors: "{{ ansible_check_mode }}"
-
