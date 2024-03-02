@@ -10,7 +10,6 @@
   include_tasks: debian.yml
   args:
     apply:
-      become: yes
+      become: true
   when:
     - ansible_distribution == 'Debian'
-

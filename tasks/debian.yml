@@ -16,7 +16,7 @@
 - name: install telegraf
   apt:
     name: telegraf
-    update_cache: yes
+    update_cache: true
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: configure telegraf
@@ -34,7 +34,6 @@
 - name: start telegraf
   service:
     name: telegraf
-    enabled: yes
+    enabled: true
     state: started
   ignore_errors: "{{ ansible_check_mode }}"
-
