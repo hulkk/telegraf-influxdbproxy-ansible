@@ -1,0 +1,9 @@
+---
+profile: production
+
+skip_list:
+  - name[casing]
+  - fqcn[action-core]
+
+warn_list:
+  - role-name
